@@ -2,25 +2,14 @@
 
 import React from 'react';
 
-class DetailsSubpanel extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      expanded: props.expanded ? props.expanded : false
-    };
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.setState({ expanded: nextProps.expanded });
-  }
-
+class NodeDetailsSubpanel extends React.Component {
   render () {
     const badge = this.props.badge;
     const title = this.props.title.replace(/\s/g, '_');
     const headingId = `${title}Heading`;
     const collapseId = `collapse${title}`;
 
-    const expanded = this.state.expanded;
+    const expanded = this.props.expanded;
     const iconClass = `glyphicon ${expanded ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'}`;
     const iconStyle = {
       fontSize: '12px',
@@ -31,7 +20,7 @@ class DetailsSubpanel extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading" role="tab" id={headingId}>
             <h4 className="panel-title">
-              <a role="button" data-toggle="collapse" href={`#${collapseId}`} aria-controls={collapseId} className={`accordion-toggle${expanded ? '' : ' collapsed'}`} onClick={() => this.setState({ expanded: !expanded })}>
+              <a role="button" data-toggle="collapse" href={`#${collapseId}`} aria-controls={collapseId} className={`accordion-toggle${expanded ? ' collapsed' : ''}`}>
                 <span className={iconClass} style={iconStyle}></span> {this.props.title.toUpperCase()} {badge ? <span className="badge">{badge}</span> : undefined}
               </a>
             </h4>
@@ -49,10 +38,10 @@ class DetailsSubpanel extends React.Component {
   }
 }
 
-DetailsSubpanel.propTypes = {
+NodeDetailsSubpanel.propTypes = {
   title: React.PropTypes.string.isRequired,
   expanded: React.PropTypes.bool,
   badge: React.PropTypes.number
 };
 
-export default DetailsSubpanel;
+export default NodeDetailsSubpanel;

@@ -3,6 +3,7 @@
 import React from 'react';
 
 import ConnectionList from './connectionList';
+import PortList from './portList';
 import DetailsSubpanel from './detailsSubpanel';
 import DetailsSubpanelClusters from './detailsSubpanelClusters';
 import Notices from './notices';
@@ -51,15 +52,21 @@ class DetailsPanelNode extends React.Component {
         </div>
         <Notices notices={notices} />
         { node && !node.isEntryNode() ?
-          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} expanded={true} />
+          <DetailsSubpanelClusters clusters={node.clusters} region={this.state.region} />
         : undefined }
         { node && !node.isEntryNode() ?
-        <DetailsSubpanel title="Incoming Connections" badge={node.incomingConnections.length}>
+        <DetailsSubpanel title="Incoming Connections">
           <ConnectionList key={node.getName()} connections={node.incomingConnections} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
         : undefined }
-        <DetailsSubpanel title="Outgoing Connections" badge={node.outgoingConnections.length}>
+        <DetailsSubpanel title="Outgoing Connections">
           <ConnectionList key={node.getName()} connections={node.outgoingConnections} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
+        </DetailsSubpanel>
+        <DetailsSubpanel title="Inbound Ports">
+          <PortList key={node.getName()} connections={node.metadata.inbound} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
+        </DetailsSubpanel>
+        <DetailsSubpanel title="Outbound Ports">
+          <PortList key={node.getName()} connections={node.metadata.outbound} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
       </div>
     );
