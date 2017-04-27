@@ -46,7 +46,7 @@ class TrafficFlow extends React.Component {
       redirectedFrom: undefined,
       selectedChart: undefined,
       displayOptions: {
-        allowDraggingOfNodes: false,
+        allowDraggingOfNodes: true,
         showLabels: true
       },
       currentGraph_physicsOptions: {
@@ -160,9 +160,17 @@ class TrafficFlow extends React.Component {
       });
   }
 
+  startPollingData () {
+    var self = this;
+    self.beginSampleData();
+    self._timer = setInterval(self.beginSampleData.bind(self), 10 * 1000);
+  }
+
   componentDidMount () {
     this.checkInitialRoute();
-    this.beginSampleData();
+    this.startPollingData();
+
+    setTimeout(function() { this.beginSampleData(); }.bind(this), 10*1000);
 
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
