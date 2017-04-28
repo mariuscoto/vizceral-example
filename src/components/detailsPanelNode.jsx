@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import request from 'superagent';
 
 import ConnectionList from './connectionList';
 import PortList from './portList';
@@ -16,21 +17,31 @@ class DetailsPanelNode extends React.Component {
     this.state = {
       node: props.node,
       region: props.region,
+      connections: {
+        inbound: [],
+        outbound: []
+      },
       description: undefined
     };
   }
 
   componentWillReceiveProps (nextProps) {
-    const newState = {
-      region: nextProps.region,
-      node: nextProps.node
-    };
+    request.get('http://localhost:3000/connections?node=' + nextProps.node.getName())
+      .set('Accept', 'application/json')
+      .end((err, res) => {
 
-    if (this.state.region !== nextProps.region || this.state.node.getName() !== nextProps.node.getName()) {
-      newState.description = undefined;
-    }
+        const newState = {
+          region: nextProps.region,
+          node: nextProps.node,
+          connections: res.body
+        };
 
-    this.setState(newState);
+        if (this.state.region !== nextProps.region || this.state.node.getName() !== nextProps.node.getName()) {
+          newState.description = undefined;
+        }
+
+        this.setState(newState);
+      });
   }
 
   render () {
@@ -63,10 +74,10 @@ class DetailsPanelNode extends React.Component {
           <ConnectionList key={node.getName()} connections={node.outgoingConnections} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
         <DetailsSubpanel title="Inbound Ports">
-          <PortList key={node.getName()} connections={node.metadata.inbound} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
+          <PortList key={node.getName()} node={node} connections={this.state.connections.inbound} direction="incoming" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
         <DetailsSubpanel title="Outbound Ports">
-          <PortList key={node.getName()} connections={node.metadata.outbound} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
+          <PortList key={node.getName()} node={node} connections={this.state.connections.outbound} direction="outgoing" nodeClicked={clickedNode => this.props.nodeClicked(clickedNode)} />
         </DetailsSubpanel>
       </div>
     );

@@ -75,8 +75,8 @@ class PortList extends React.Component {
       const classNames = [];
       classNames.push('disabled');
 
-      const port = connection[0];
-      const dest = connection[1];
+      const port = connection.source;
+      const dest = connection.source_port;
 
       return {
         name: dest,
@@ -111,8 +111,8 @@ class PortList extends React.Component {
           sortDirection={this.state.sortDirection}
           sort={this.sort}
         >
-          <Column label="Cluster" dataKey="name" cellRenderer={nameRenderer} width={220} />
-          <Column label="Errors" dataKey="errorRate" cellRenderer={portRenderer} width={70}/>
+          <Column label="PORT" dataKey="name" cellRenderer={nameRenderer} width={70} />
+          <Column label="TO" dataKey="errorRate" cellRenderer={portRenderer} width={220}/>
         </Table>
       </div>
       : <span>None.</span>
