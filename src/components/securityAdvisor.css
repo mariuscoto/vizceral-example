@@ -1,0 +1,22 @@
+#security-advisor {
+  width: 1000px;
+  margin: 0px auto 0px auto;
+}
+
+.sg-table {
+  border: 1px solid var(--colorBorderLines);
+  border-radius: 3px;
+}
+
+.sg-table td {
+  padding: 5px;
+}
+
+.sg-tr-header {
+  font-weight: bold;
+  border-bottom: 2px solid;
+}
+
+.sg-td-header {
+  width: 330px;
+}

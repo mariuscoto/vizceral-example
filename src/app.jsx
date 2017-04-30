@@ -8,12 +8,20 @@ import WebFont from 'webfontloader';
 
 import './app.css';
 import TrafficFlow from './components/trafficFlow';
+import SecurityAdvisor from './components/securityAdvisor';
 
 function fontsActive () {
-  ReactDOM.render(
-    <TrafficFlow />,
-    document.getElementById('traffic')
-  );
+  if (location.pathname === '/security') {
+    ReactDOM.render(
+      <SecurityAdvisor />,
+      document.getElementById('main')
+    );
+  } else {
+    ReactDOM.render(
+      <TrafficFlow />,
+      document.getElementById('main')
+    );
+  }
 }
 
 // Only load the app once we have the webfonts.
