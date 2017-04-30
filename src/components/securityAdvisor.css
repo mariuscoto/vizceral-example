@@ -10,6 +10,7 @@
 
 .sg-table td {
   padding: 5px;
+  white-space: pre;
 }
 
 .sg-tr-header {
