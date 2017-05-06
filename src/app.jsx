@@ -8,11 +8,14 @@ import WebFont from 'webfontloader';
 
 import './app.css';
 import Nodes from './components/nodes';
+import Alerts from './components/alerts';
 import TrafficFlow from './components/trafficFlow';
 import SecurityAdvisor from './components/securityAdvisor';
 
 function fontsActive () {
-  if (location.pathname === '/nodes') {
+  if (location.pathname === '/alerts') {
+    ReactDOM.render(<Alerts />, document.getElementById('main'));
+  } else if (location.pathname === '/nodes') {
     ReactDOM.render(<Nodes />, document.getElementById('main'));
   } else if (location.pathname === '/security') {
     ReactDOM.render(<SecurityAdvisor />, document.getElementById('main'));

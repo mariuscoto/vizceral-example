@@ -67,13 +67,11 @@ class Nodes extends React.Component {
             <td className='sg-td-header'>INSTANCES</td>
             <td className='sg-td-header'>COUNT</td>
           </tr>
-          { Object.keys(this.state.services).map((key, i) => {
-            return (<tr key={i}>
+          { Object.keys(this.state.services).map((key, i) => (<tr key={i}>
               <td>{key}</td>
-              <td>{this.state.services[key].join("\n")}</td>
+              <td>{this.state.services[key].join('\n')}</td>
               <td>{this.state.services[key].length}</td>
-            </tr>);
-          })}
+            </tr>))}
         </tbody>
       </table>
     </div>);
