@@ -11,6 +11,7 @@ class SecurityAdvisor extends React.Component {
 
     this.state = {
       sgs: [],
+      ports: {}
     };
   }
 
@@ -19,7 +20,18 @@ class SecurityAdvisor extends React.Component {
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {
+          // Save SG
           this.setState({ sgs: res.body });
+          // Get port usage
+          const ports = {};
+          res.body.forEach((sg) => {
+            request.get(`http://localhost:3000/inbound?sgID=${sg.GroupId}`)
+              .set('Accept', 'application/json')
+              .end((error, result) => {
+                ports[sg.GroupId] = result.body;
+                this.setState({ ports: ports });
+              });
+          });
         }
       });
   }
@@ -40,18 +52,22 @@ class SecurityAdvisor extends React.Component {
               { sg.IpPermissions.map((rule, j) => {
                 let port = '';
                 let destination = '';
+                let recommandation = 'This port is NOT used. It can be CLOSED.';
 
-                if (rule.IpProtocol === '-1') { port = 'ALL'; } else { port = `${rule.FromPort} - ${rule.ToPort}`; }
+                if (rule.IpProtocol === '-1') { port = 'ALL'; } else { port = `${rule.FromPort}`; }
                 if (rule.UserIdGroupPairs.length !== 0) {
                   destination = rule.UserIdGroupPairs[0].GroupId.toString();
                 } else {
                   destination = rule.IpRanges[0].CidrIp.toString();
                 }
+                if (sg.GroupId in this.state.ports && this.state.ports[sg.GroupId].indexOf(port) > -1) {
+                  recommandation = 'This port is in use.';
+                }
 
                 return (<tr key={j}>
                   <td>{port}</td>
                   <td>{destination}</td>
-                  <td>TBD</td>
+                  <td>{recommandation}</td>
                 </tr>);
               })}
             </tbody>

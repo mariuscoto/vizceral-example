@@ -1,0 +1,10 @@
+#add-alert-form {
+  line-height: 32px;
+  font-size: 18px;
+  padding-left: 30px;
+}
+
+#add-alert-form input {
+    height: 27px;
+    margin-left: 5px;
+}
