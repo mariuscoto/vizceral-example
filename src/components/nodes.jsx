@@ -14,7 +14,7 @@ class Nodes extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:3000/nodes')
+    request.get('http://localhost:2000/nodes')
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {

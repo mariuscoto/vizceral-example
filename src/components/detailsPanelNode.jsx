@@ -26,7 +26,7 @@ class DetailsPanelNode extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    request.get(`http://localhost:3000/connections?node=${nextProps.node.getName()}`)
+    request.get(`http://localhost:2000/connections?node=${nextProps.node.getName()}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         const newState = {

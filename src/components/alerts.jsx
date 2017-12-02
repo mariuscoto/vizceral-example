@@ -19,7 +19,7 @@ class Alerts extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:3000/alerts')
+    request.get('http://localhost:2000/alerts')
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {

@@ -16,7 +16,7 @@ class SecurityAdvisor extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:3000/sg')
+    request.get('http://localhost:2000/sg')
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {
@@ -25,7 +25,7 @@ class SecurityAdvisor extends React.Component {
           // Get port usage
           const ports = {};
           res.body.forEach((sg) => {
-            request.get(`http://localhost:3000/inbound?sgID=${sg.GroupId}`)
+            request.get(`http://localhost:2000/inbound?sgID=${sg.GroupId}`)
               .set('Accept', 'application/json')
               .end((error, result) => {
                 ports[sg.GroupId] = result.body;
