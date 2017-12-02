@@ -3,6 +3,7 @@
 import React from 'react';
 import request from 'superagent';
 
+import AppConstants from '../appConstants';
 import ConnectionList from './connectionList';
 import PortList from './portList';
 import DetailsSubpanel from './detailsSubpanel';
@@ -26,7 +27,7 @@ class DetailsPanelNode extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    request.get(`http://localhost:2000/connections?node=${nextProps.node.getName()}`)
+    request.get(`http://${AppConstants.BACKEND_URL}/connections?node=${nextProps.node.getName()}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         const newState = {

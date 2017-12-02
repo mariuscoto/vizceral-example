@@ -11,6 +11,7 @@ import queryString from 'query-string';
 import request from 'superagent';
 
 import './trafficFlow.css';
+import AppConstants from '../appConstants';
 import Breadcrumbs from './breadcrumbs';
 import DisplayOptions from './displayOptions';
 import PhysicsOptions from './physicsOptions';
@@ -150,7 +151,7 @@ class TrafficFlow extends React.Component {
 
   beginSampleData () {
     this.traffic = { nodes: [], connections: [] };
-    request.get('http://localhost:2000/graph')
+    request.get(`http://${AppConstants.BACKEND_URL}/graph`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {

@@ -11,7 +11,9 @@ const AppConstants = {
     UPDATE_FILTER: null,
     RESET_FILTERS: null,
     CLEAR_FILTERS: null
-  })
+  }),
+
+  BACKEND_URL: 'localhost:2000'
 };
 
 export default AppConstants;

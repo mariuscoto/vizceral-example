@@ -3,6 +3,8 @@
 import React from 'react';
 import request from 'superagent';
 
+import AppConstants from '../appConstants';
+
 import './alerts.css';
 
 
@@ -19,7 +21,7 @@ class Alerts extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:2000/alerts')
+    request.get(`http://${AppConstants.BACKEND_URL}/alerts`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {

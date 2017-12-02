@@ -3,6 +3,8 @@
 import React from 'react';
 import request from 'superagent';
 
+import AppConstants from '../appConstants';
+
 class Nodes extends React.Component {
   constructor (props) {
     super(props);
@@ -14,7 +16,7 @@ class Nodes extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:2000/nodes')
+    request.get(`http://${AppConstants.BACKEND_URL}/nodes`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {

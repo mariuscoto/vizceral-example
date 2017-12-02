@@ -3,6 +3,8 @@
 import React from 'react';
 import request from 'superagent';
 
+import AppConstants from '../appConstants';
+
 import './securityAdvisor.css';
 
 class SecurityAdvisor extends React.Component {
@@ -16,7 +18,7 @@ class SecurityAdvisor extends React.Component {
   }
 
   componentDidMount () {
-    request.get('http://localhost:2000/sg')
+    request.get(`http://${AppConstants.BACKEND_URL}/sg`)
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {
@@ -25,7 +27,7 @@ class SecurityAdvisor extends React.Component {
           // Get port usage
           const ports = {};
           res.body.forEach((sg) => {
-            request.get(`http://localhost:2000/inbound?sgID=${sg.GroupId}`)
+            request.get(`http://${AppConstants.BACKEND_URL}/inbound?sgID=${sg.GroupId}`)
               .set('Accept', 'application/json')
               .end((error, result) => {
                 ports[sg.GroupId] = result.body;
